@@ -8,6 +8,8 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.search-form');
+const searchInput = document.querySelector('.search-input');
+const input = searchInput.value.trim();
 export const galleryList = document.querySelector('.gallery');
 
 export const lightbox = new SimpleLightbox('.gallery a', {
@@ -28,7 +30,7 @@ const hideLoader = () => {
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
   galleryList.innerHTML = '';
-  const input = e.target.elements.search.value.trim();
+  const input = searchInput.value.trim();
   if (input !== '') {
     getImages(input)
       .then(data => {
@@ -46,6 +48,7 @@ searchForm.addEventListener('submit', e => {
           position: 'topRight',
         });
       });
+
     searchForm.reset();
   } else {
     iziToast.show({

@@ -17,15 +17,15 @@ export function renderGallery(arr) {
   } else {
     const markup = arr
       .map(photo => {
-        return `<li class="photos-list-item">
+        return `<li class="gallery-item">
             <a class="photos-list-link" href="${photo.largeImageURL}">
-            <img class="photo" src="${photo.webformatURL}" alt="${photo.tags}"/>
+            <img class="image" src="${photo.webformatURL}" alt="${photo.tags}"/>
             </a>
-            <ul class="photo-information-container">
-            <li class="item-photo-information-container"><p><span class="accent">Likes</span></br>${photo.likes}</p></li>
-            <li class="item-photo-information-container"><p><span class="accent">Views</span></br>${photo.views}</p></li>
-            <li class="item-photo-information-container"><p><span class="accent">Comments</span></br>${photo.comments}</p></li>
-            <li class="item-photo-information-container"><p><span class="accent">Downloads</span></br>${photo.downloads}</p></li>
+            <ul class="list-container">
+            <li class="item-container"><p><span class="title">Likes</span></br>${photo.likes}</p></li>
+            <li class="item-container"><p><span class="title">Views</span></br>${photo.views}</p></li>
+            <li class="item-container"><p><span class="title">Comments</span></br>${photo.comments}</p></li>
+            <li class="item-container"><p><span class="title">Downloads</span></br>${photo.downloads}</p></li>
             </ul>
             </li>`;
       })
@@ -33,6 +33,5 @@ export function renderGallery(arr) {
     galleryList.insertAdjacentHTML('beforeend', markup);
 
     lightbox.refresh();
-    return markup;
   }
 }
