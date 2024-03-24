@@ -1,2 +1,59 @@
 import { getImages } from './js/pixabay-api';
-getImages();
+import { renderGallery } from './js/render-functions';
+
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const searchForm = document.querySelector('.search-form');
+export const galleryList = document.querySelector('.gallery');
+
+export const lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+});
+
+const preloader = document.querySelector('.loader');
+preloader.style.display = 'none';
+
+export const showLoader = () => {
+  preloader.style.display = 'flex';
+};
+const hideLoader = () => {
+  preloader.style.display = 'none';
+};
+
+searchForm.addEventListener('submit', e => {
+  e.preventDefault();
+  galleryList.innerHTML = '';
+  const input = e.target.elements.search.value.trim();
+  if (input !== '') {
+    getImages(input)
+      .then(data => {
+        renderGallery(data.hits);
+        hideLoader();
+      })
+      .catch(error => {
+        console.log(error);
+        hideLoader();
+        iziToast.error({
+          message: 'Sorry, an error occurred while loading. Please try again!',
+          theme: 'dark',
+          progressBarColor: '#FFFFFF',
+          color: '#EF4040',
+          position: 'topRight',
+        });
+      });
+    searchForm.reset();
+  } else {
+    iziToast.show({
+      message: 'Please complete the field!',
+      theme: 'dark',
+      progressBarColor: '#FFFFFF',
+      color: '#EF4040',
+      position: 'topRight',
+    });
+  }
+});

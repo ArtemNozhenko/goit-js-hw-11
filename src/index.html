@@ -9,14 +9,16 @@
   </head>
   <body>
     <section>
-      <form class="text-form">
-        <label>
-          Email
-          <input type="text" name="text" autofocus />
-        </label>
-
-        <button type="submit">Search</button>
+      <form class="search-form">
+        <input
+          type="text"
+          name="query"
+          class="search-input"
+          placeholder="Search images..."
+        />
+        <button type="submit" class="search-btn">Search</button>
       </form>
+      <div class="loader"></div>
       <ul class="gallery"></ul>
     </section>
 
