@@ -32,14 +32,13 @@ searchForm.addEventListener('submit', e => {
   galleryList.innerHTML = '';
   const input = searchInput.value.trim();
   if (input !== '') {
+    showLoader();
     getImages(input)
       .then(data => {
         renderGallery(data.hits);
-        hideLoader();
       })
       .catch(error => {
         console.log(error);
-        hideLoader();
         iziToast.error({
           message: 'Sorry, an error occurred while loading. Please try again!',
           theme: 'dark',
@@ -47,9 +46,11 @@ searchForm.addEventListener('submit', e => {
           color: '#EF4040',
           position: 'topRight',
         });
+      })
+      .finally(() => {
+        hideLoader();
+        searchForm.reset();
       });
-
-    searchForm.reset();
   } else {
     iziToast.show({
       message: 'Please complete the field!',
